@@ -1,7 +1,7 @@
 package com.travelbnbtest.travelbnbtest.service;
 
 import com.travelbnbtest.travelbnbtest.config.TwilioConfig;
-import com.twilio.Twilio;
+
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class TwilioService {
         try {
             Message sms = Message.creator(
                     new PhoneNumber(to),
-                    new PhoneNumber(twilioConfig.getTwilioPhoneNumber()),
+                    new PhoneNumber(twilioConfig.getSmsPhoneNumber()),
                     message).create();
             return sms.getSid();
         } catch (Exception e) {
@@ -29,5 +29,16 @@ public class TwilioService {
             e.printStackTrace();
             return null; // or throw new RuntimeException("Failed to send SMS");
         }
+    }
+    public String sendWhatsAppMessage(String to, String messageBody) {
+       try {
+           PhoneNumber toPhoneNumber = new PhoneNumber("whatsapp:" + to);
+           PhoneNumber fromPhoneNumber = new PhoneNumber("whatsapp:" + twilioConfig.getWhatsappPhoneNumber());
+           Message message = Message.creator(toPhoneNumber, fromPhoneNumber, messageBody).create();
+           return message.getSid();
+       }catch (Exception e){
+           e.printStackTrace();
+           return null;
+       }
     }
 }
