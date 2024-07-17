@@ -11,7 +11,7 @@ public class PropertyDto {
     private Integer noGuests;
     private Integer noBedrooms;
     private Integer noBathrooms;
-    private Integer price;
+    private Integer nightlyPrice;
     private Country country;
     private Location location;
 }

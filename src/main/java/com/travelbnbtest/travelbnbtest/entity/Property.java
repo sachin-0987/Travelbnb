@@ -25,8 +25,8 @@ public class Property {
     @Column(name = "no_bathrooms", nullable = false)
     private Integer noBathrooms;
 
-    @Column(name = "price", nullable = false)
-    private Integer price;
+    @Column(name = "nightly_price", nullable = false)
+    private Integer nightlyPrice;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -35,5 +35,6 @@ public class Property {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
+
 
 }

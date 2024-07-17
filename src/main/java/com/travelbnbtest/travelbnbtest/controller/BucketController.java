@@ -19,5 +19,20 @@ public class BucketController {
     public ResponseEntity<?> uploadFile(@RequestParam MultipartFile file,
                                         @PathVariable String bucketName){
             return new ResponseEntity<>(service.uploadFile(file, bucketName), HttpStatus.OK);
-        }
+    }
+
+    @DeleteMapping(path = "/delete/file/{bucketName}/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteFile(@PathVariable String bucketName, @PathVariable String fileName) {
+       return new ResponseEntity<>(service.deleteFile(bucketName, fileName), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/bucket/{bucketName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllFiles(@PathVariable String bucketName) {
+        return new ResponseEntity<>(service.getAllFileUrls(bucketName), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/update/file/{bucketName}/{fileName}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateFile(@RequestParam MultipartFile file, @PathVariable String bucketName, @PathVariable String fileName) {
+        return new ResponseEntity<>(service.updateFile(file, bucketName, fileName), HttpStatus.OK);
+    }
 }

@@ -36,7 +36,7 @@ public class BookingServiceImpl implements BookingService{
         bookingDto.setProperty(property);
         bookingDto.setAppUser(user);
 
-        int nightlyPrice = property.getPrice();
+        int nightlyPrice = property.getNightlyPrice();
         int totalPrice = nightlyPrice * bookingDto.getTotalNights();
         int gstAmount = (totalPrice * 18) / 100;
         int finalPrice = totalPrice + gstAmount;

@@ -21,6 +21,7 @@ public class PDFService {
            Chunk bookingConfirmation = new Chunk("Booking Confirmation", font);
            Chunk guestName = new Chunk("Guest Name: "+bookingDto.getName(), font);
            Chunk totalNights = new Chunk("Total Nights: "+bookingDto.getTotalNights(), font);
+           Chunk nightlyPrice = new Chunk("Price Per Night: "+bookingDto.getProperty().getNightlyPrice(), font);
            Chunk totalPrice = new Chunk("Total Price: "+bookingDto.getPrice(), font);
 
            document.add(bookingConfirmation);
@@ -28,6 +29,8 @@ public class PDFService {
            document.add(guestName);
            document.add(new Paragraph("\n"));
            document.add(totalNights);
+           document.add(new Paragraph("\n"));
+           document.add(nightlyPrice);
            document.add(new Paragraph("\n"));
            document.add(totalPrice);
 

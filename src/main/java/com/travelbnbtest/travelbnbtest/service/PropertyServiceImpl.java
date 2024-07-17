@@ -121,7 +121,7 @@ public class PropertyServiceImpl implements PropertyService{
         Property property=new Property();
         property.setName(dto.getName());
         property.setNoGuests(dto.getNoGuests());
-        property.setPrice(dto.getPrice());
+        property.setNightlyPrice(dto.getNightlyPrice());
         property.setNoBedrooms(dto.getNoBedrooms());
         property.setNoBathrooms(dto.getNoBathrooms());
         property.setLocation(dto.getLocation());
@@ -135,7 +135,7 @@ public class PropertyServiceImpl implements PropertyService{
         dto.setName(property.getName());
         dto.setNoBedrooms(property.getNoBedrooms());
         dto.setNoBathrooms(property.getNoBathrooms());
-        dto.setPrice(property.getPrice());
+        dto.setNightlyPrice(property.getNightlyPrice());
         dto.setNoGuests(property.getNoGuests());
         dto.setCountry(property.getCountry());
         dto.setLocation(property.getLocation());

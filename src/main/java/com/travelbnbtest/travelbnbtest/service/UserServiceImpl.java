@@ -6,10 +6,16 @@ import com.travelbnbtest.travelbnbtest.payload.AppUserDto;
 import com.travelbnbtest.travelbnbtest.payload.JWTTokenDTo;
 import com.travelbnbtest.travelbnbtest.payload.LoginDto;
 import com.travelbnbtest.travelbnbtest.repository.AppUserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,6 +79,50 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("username not exist :" +loginDto.getUsername());
         }
 
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        appUserRepository.deleteById(userId);
+    }
+
+    @Override
+    public List<AppUserDto> getAllUsers(int pageSize, int pageNo, String sortBy, String sortDir) {
+        Pageable pageable=null;
+        if (sortDir.equalsIgnoreCase("asc")){
+             pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        } else if (sortDir.equalsIgnoreCase("desc")) {
+            pageable=PageRequest.of(pageNo,pageSize,Sort.by(sortBy).descending());
+        }else {
+           pageable= PageRequest.of(pageNo,pageSize);
+        }
+
+        Page<AppUser> all = appUserRepository.findAll(pageable);
+        List<AppUser> content = all.getContent();
+        List<AppUserDto> collect = content.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
+        return collect;
+    }
+
+    @Override
+    public AppUserDto updateUser(long userId, AppUserDto dto) {
+        AppUser appUser=null;
+         appUser = appUserRepository.findById(userId).orElseThrow(
+                 ()->new ResourceNotFoundException("user not found with id:" +userId)
+         );
+         appUser=dtoToEntiy(dto);
+         appUser.setId(userId);
+        AppUser save = appUserRepository.save(appUser);
+        AppUserDto appUserDto = entityToDto(save);
+        return appUserDto;
+    }
+
+    @Override
+    public AppUserDto getUserById(long userId) {
+        AppUser appUser = appUserRepository.findById(userId).orElseThrow(
+                ()->new ResourceNotFoundException("user not found with id:" +userId)
+        );
+        AppUserDto appUserDto = entityToDto(appUser);
+        return appUserDto;
     }
 
 }
