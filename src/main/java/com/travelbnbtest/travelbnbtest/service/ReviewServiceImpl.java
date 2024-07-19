@@ -123,7 +123,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteReview(AppUser user, long propertyId) {
-        Property property = propertyRepository.findById(propertyId).get();
+        Property property = propertyRepository.findById(propertyId).orElseThrow(
+                ()->new ResourceNotFoundException("Property not found with id: "+propertyId)
+        );
         Optional<Reviews> reviews = reviewsRepository.findReviewsByUserAndProperty(user, property);
         if (reviews.isPresent()){
             reviewsRepository.delete(reviews.get());
