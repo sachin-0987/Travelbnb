@@ -52,10 +52,10 @@ public class BookingServiceImpl implements BookingService{
                 String uploadedFileUrl = bucketService.uploadFile(file, "sachin2002");
                 System.out.println(uploadedFileUrl);
                 //for whatsapp
-                String whatsappId = twilioService.sendWhatsAppMessage(bookingDto.getMobile(), "Your booking is confirmed..Click for deatils: " + uploadedFileUrl);
+                String whatsappId = twilioService.sendWhatsAppMessage(bookingDto.getMobile(), "Your booking is confirmed..Click for details: " + uploadedFileUrl);
                 System.out.println(whatsappId);
                 //for sms
-                String smsId = twilioService.sendSms(bookingDto.getMobile(), "Your booking is confirmed..Click for deatils: " + uploadedFileUrl);
+                String smsId = twilioService.sendSms(bookingDto.getMobile(), "Your booking is confirmed..Click for details: " + uploadedFileUrl);
                 System.out.println(smsId);
             }catch (Exception e){
                 e.printStackTrace();
