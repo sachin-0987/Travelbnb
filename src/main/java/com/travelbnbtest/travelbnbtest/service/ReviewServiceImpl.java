@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -123,8 +124,12 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteReview(AppUser user, long propertyId) {
         Property property = propertyRepository.findById(propertyId).get();
-
-        reviewsRepository.deleteReviewsByUserAndProperty(user,property);
+        Optional<Reviews> reviews = reviewsRepository.findReviewsByUserAndProperty(user, property);
+        if (reviews.isPresent()){
+            reviewsRepository.delete(reviews.get());
+        }else {
+                throw new ResourceNotFoundException("Review not found for the given user and property");
+        }
     }
 
 }

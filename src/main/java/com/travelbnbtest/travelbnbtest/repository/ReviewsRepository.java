@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewsRepository extends JpaRepository<Reviews, Long> {
 
@@ -21,9 +22,7 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Long> {
     @Query("Select r from Reviews r where r.appUser=:user")
     List<Reviews> findByUserReviews(@Param("user") AppUser user);
 
-    @Modifying
-    @Transactional
-    @Query("Delete from Reviews r where r.appUser=:user and r.property=:property")
-    void deleteReviewsByUserAndProperty(@Param("user") AppUser user, @Param("property") Property property);
+    @Query("Select r from Reviews r where r.appUser=:user and r.property=:property")
+    Optional<Reviews> findReviewsByUserAndProperty(@Param("user") AppUser user, @Param("property") Property property);
 
 }
