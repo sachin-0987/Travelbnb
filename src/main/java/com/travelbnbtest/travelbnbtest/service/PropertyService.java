@@ -15,4 +15,6 @@ public interface PropertyService {
     List<PropertyDto> getAllProperty(int pageSize, int pageNo, String sortBy, String sortDir);
 
     PropertyDto updateProperty(long propertyId, long locationId, long countryId, PropertyDto propertyDto);
+
+    List<PropertyDto> searchProperty(String name);
 }

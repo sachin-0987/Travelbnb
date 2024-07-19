@@ -115,6 +115,13 @@ public class PropertyServiceImpl implements PropertyService{
         return dto;
     }
 
+    @Override
+    public List<PropertyDto> searchProperty(String name) {
+        List<Property> properties = propertyRepository.searchProperty(name);
+        List<PropertyDto> collect = properties.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
+        return collect;
+    }
+
 
     //dto to entity
     Property dtoToEntity(PropertyDto dto){

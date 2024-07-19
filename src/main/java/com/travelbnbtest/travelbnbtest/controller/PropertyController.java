@@ -14,19 +14,17 @@ import java.util.List;
 @RequestMapping("/api/v1/property")
 public class PropertyController {
 
-    private PropertyRepository propertyRepository;
     private PropertyService propertyService;
 
-    public PropertyController(PropertyRepository propertyRepository, PropertyService propertyService) {
-        this.propertyRepository = propertyRepository;
+    public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
 
     }
 
     @GetMapping("/search/properties")
-    public ResponseEntity<List<Property>> searchProperty(@RequestParam String name) {
-        List<Property> properties = propertyRepository.searchProperty(name);
-        return new ResponseEntity<>(properties, HttpStatus.OK);
+    public ResponseEntity<List<PropertyDto>> searchProperty(@RequestParam String name) {
+        List<PropertyDto> properties = propertyService.searchProperty(name);
+        return new ResponseEntity<>(properties,HttpStatus.OK);
     }
 
     @PostMapping("/addProperty")
