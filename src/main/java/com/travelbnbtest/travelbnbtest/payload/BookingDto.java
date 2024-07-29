@@ -2,6 +2,7 @@ package com.travelbnbtest.travelbnbtest.payload;
 
 import com.travelbnbtest.travelbnbtest.entity.AppUser;
 import com.travelbnbtest.travelbnbtest.entity.Property;
+import com.travelbnbtest.travelbnbtest.entity.Room;
 import lombok.Data;
 
 @Data
@@ -15,4 +16,5 @@ public class BookingDto {
     private Integer totalNights;
     private AppUser appUser;
     private Property property;
+    private Room room;
 }

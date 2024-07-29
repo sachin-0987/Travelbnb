@@ -1,6 +1,8 @@
 package com.travelbnbtest.travelbnbtest.controller;
 
+
 import com.travelbnbtest.travelbnbtest.entity.AppUser;
+import com.travelbnbtest.travelbnbtest.entity.Room;
 import com.travelbnbtest.travelbnbtest.payload.BookingDto;
 import com.travelbnbtest.travelbnbtest.service.BookingService;
 
@@ -13,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
+import java.util.List;
 
 
 @RestController
@@ -29,9 +32,10 @@ public class BookingController {
     public ResponseEntity<BookingDto> createBooking(
             @RequestParam long propertyId,
             @AuthenticationPrincipal AppUser user,
-            @RequestBody BookingDto bookingDto
+            @RequestBody BookingDto bookingDto,
+            @RequestParam long roomId
             ){
-        BookingDto createdBooking = bookingService.createBooking(propertyId, user, bookingDto);
+        BookingDto createdBooking = bookingService.createBooking(propertyId, user, bookingDto,roomId);
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
@@ -102,5 +106,11 @@ public class BookingController {
         };
 
         return multipartFile;
+    }
+
+    @GetMapping("/available-rooms")
+    public ResponseEntity<List<Room>> getAvailableRooms(@RequestParam long propertyId) {
+        List<Room> availableRooms = bookingService.getAvailableRooms(propertyId);
+        return new ResponseEntity<>(availableRooms,HttpStatus.OK);
     }
 }

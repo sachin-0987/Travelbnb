@@ -37,4 +37,12 @@ public class Booking {
     @JoinColumn(name = "property_id")
     private Property property;
 
+
+    @Version
+    private Integer version;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
 }
