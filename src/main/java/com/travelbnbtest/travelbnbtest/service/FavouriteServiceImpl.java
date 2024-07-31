@@ -10,6 +10,7 @@ import com.travelbnbtest.travelbnbtest.repository.PropertyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,10 @@ public class FavouriteServiceImpl implements FavouriteService{
         favouriteDto.setAppUser(user);
         Favourite favourite = dtoToEntity(favouriteDto);
 
+        Optional<Favourite> existFavourite = favouriteRepository.findByUserAndProperty(favourite.getAppUser(), favourite.getProperty());
+        if (existFavourite.isPresent()){
+            throw new ResourceNotFoundException("Favourite Already exist with property: "+favourite.getProperty().getName());
+        }
         Favourite save = favouriteRepository.save(favourite);
         FavouriteDto dto = entityToDto(save);
         return dto;

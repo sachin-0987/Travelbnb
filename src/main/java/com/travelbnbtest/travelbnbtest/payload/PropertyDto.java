@@ -4,6 +4,8 @@ import com.travelbnbtest.travelbnbtest.entity.Country;
 import com.travelbnbtest.travelbnbtest.entity.Location;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class PropertyDto {
     private Long id;
@@ -14,4 +16,5 @@ public class PropertyDto {
     private Integer nightlyPrice;
     private Country country;
     private Location location;
+    private LocalDateTime dateAdded;
 }

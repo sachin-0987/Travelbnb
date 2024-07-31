@@ -26,7 +26,9 @@ public class LocationServiceImpl implements LocationService{
     @Override
     public LocationDto addLocation(LocationDto locationDto) {
         Location location = dtoToEntity(locationDto);
-
+        Optional<Location> existLocation = locationRepository.findByName(location.getName());
+        if (existLocation.isPresent()){
+            throw new ResourceNotFoundException("Location Already exist with name: "+location.getName());        }
         Location save = locationRepository.save(location);
         LocationDto dto = entityToDto(save);
         return dto;

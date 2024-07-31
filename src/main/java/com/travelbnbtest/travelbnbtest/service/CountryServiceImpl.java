@@ -27,6 +27,10 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public CountryDto addCountry(CountryDto dto) {
         Country country = dtoToEntity(dto);
+        Optional<Country> existName = countryRepository.findByName(country.getName());
+        if (existName.isPresent()){
+            throw new ResourceNotFoundException("Country Already exist with name: "+country.getName());
+        }
         Country save = countryRepository.save(country);
         CountryDto dto1 = entityToDto(save);
         return dto1;

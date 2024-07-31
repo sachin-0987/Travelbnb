@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,7 +50,12 @@ public class PropertyServiceImpl implements PropertyService{
             throw new ResourceNotFoundException("Country not found with id: "+countryId);
         }
         Property property = dtoToEntity(dto);
-        
+
+        Optional<Property> existProperty = propertyRepository.findByNameAndLocationAndCountry(property.getName(), property.getLocation(), property.getCountry());
+        if (existProperty.isPresent()){
+            //Property Already exist
+            throw  new ResourceNotFoundException("Property already exists with name: " + property.getName());
+        }
         Property save = propertyRepository.save(property);
         PropertyDto dto1 = entityToDto(save);
         return dto1;
@@ -117,7 +123,9 @@ public class PropertyServiceImpl implements PropertyService{
 
     @Override
     public List<PropertyDto> searchProperty(String name) {
-        List<Property> properties = propertyRepository.searchProperty(name);
+        // Define the cutoff date for "recent" properties
+        LocalDateTime recentDate = LocalDateTime.now().minusDays(30);//for 30 days
+        List<Property> properties = propertyRepository.searchRecentProperty(name,recentDate);
         List<PropertyDto> collect = properties.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
         return collect;
     }
@@ -146,6 +154,7 @@ public class PropertyServiceImpl implements PropertyService{
         dto.setNoGuests(property.getNoGuests());
         dto.setCountry(property.getCountry());
         dto.setLocation(property.getLocation());
+        dto.setDateAdded(property.getDateAdded());
         return dto;
     }
 }
