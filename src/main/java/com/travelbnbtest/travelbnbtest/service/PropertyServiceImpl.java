@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -123,9 +122,7 @@ public class PropertyServiceImpl implements PropertyService{
 
     @Override
     public List<PropertyDto> searchProperty(String name) {
-        // Define the cutoff date for "recent" properties
-        LocalDateTime recentDate = LocalDateTime.now().minusDays(30);//for 30 days
-        List<Property> properties = propertyRepository.searchRecentProperty(name,recentDate);
+        List<Property> properties = propertyRepository.searchRecentProperty(name);
         List<PropertyDto> collect = properties.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
         return collect;
     }
@@ -154,7 +151,6 @@ public class PropertyServiceImpl implements PropertyService{
         dto.setNoGuests(property.getNoGuests());
         dto.setCountry(property.getCountry());
         dto.setLocation(property.getLocation());
-        dto.setDateAdded(property.getDateAdded());
         return dto;
     }
 }

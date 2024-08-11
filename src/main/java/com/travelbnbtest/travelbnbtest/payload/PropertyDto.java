@@ -16,5 +16,4 @@ public class PropertyDto {
     private Integer nightlyPrice;
     private Country country;
     private Location location;
-    private LocalDateTime dateAdded;
 }

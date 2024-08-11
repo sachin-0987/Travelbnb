@@ -41,6 +41,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             Optional<AppUser> byUsername = appUserRepository.findByUsername(username);
             if (byUsername.isPresent()){
                 AppUser appUser = byUsername.get();
+
+                //To keep track of current user logged in
                 UsernamePasswordAuthenticationToken authenticationToken=
                         new UsernamePasswordAuthenticationToken(appUser,null, Collections.singletonList(new SimpleGrantedAuthority(appUser.getRole())));
                 authenticationToken.setDetails(new WebAuthenticationDetails(request));

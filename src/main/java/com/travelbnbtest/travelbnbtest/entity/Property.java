@@ -39,14 +39,5 @@ public class Property {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @Column(name = "date_added", nullable = false)
-    private LocalDateTime dateAdded;  // it will track when the property was added
-
-    @PrePersist
-    protected void onCreate(){
-        if (dateAdded==null){
-            dateAdded= LocalDateTime.now();
-        }
-    }
 
 }
