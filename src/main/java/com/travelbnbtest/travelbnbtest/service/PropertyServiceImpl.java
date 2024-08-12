@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -122,7 +123,8 @@ public class PropertyServiceImpl implements PropertyService{
 
     @Override
     public List<PropertyDto> searchProperty(String name) {
-        List<Property> properties = propertyRepository.searchRecentProperty(name);
+        LocalDate currentDate = LocalDate.now();
+        List<Property> properties = propertyRepository.searchRecentProperty(name,currentDate);
         List<PropertyDto> collect = properties.stream().map(e -> entityToDto(e)).collect(Collectors.toList());
         return collect;
     }
@@ -138,6 +140,8 @@ public class PropertyServiceImpl implements PropertyService{
         property.setNoBathrooms(dto.getNoBathrooms());
         property.setLocation(dto.getLocation());
         property.setCountry(dto.getCountry());
+        property.setCheckIn(dto.getCheckIn());
+        property.setCheckOut(dto.getCheckOut());
         return property;
     }
     //entity to dto
@@ -151,6 +155,8 @@ public class PropertyServiceImpl implements PropertyService{
         dto.setNoGuests(property.getNoGuests());
         dto.setCountry(property.getCountry());
         dto.setLocation(property.getLocation());
+        dto.setCheckIn(property.getCheckIn());
+        dto.setCheckOut(property.getCheckOut());
         return dto;
     }
 }
