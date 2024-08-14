@@ -40,10 +40,5 @@ public class Property {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @Column(name = "check_in", nullable = false)
-    private LocalDate checkIn;
-
-    @Column(name = "check_out", nullable = false)
-    private LocalDate checkOut;
 
 }

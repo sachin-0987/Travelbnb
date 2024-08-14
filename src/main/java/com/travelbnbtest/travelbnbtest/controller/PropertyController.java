@@ -1,8 +1,6 @@
 package com.travelbnbtest.travelbnbtest.controller;
 
-import com.travelbnbtest.travelbnbtest.entity.Property;
 import com.travelbnbtest.travelbnbtest.payload.PropertyDto;
-import com.travelbnbtest.travelbnbtest.repository.PropertyRepository;
 import com.travelbnbtest.travelbnbtest.service.PropertyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
